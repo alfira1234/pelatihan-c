@@ -25,7 +25,9 @@ Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
-//route untuk menampilkan data post
+
+Route::middleware('auth', 'verified')->group(function () {
+    //route untuk menampilkan data post
 Route::get('/post', [PostController::class, 'index'])->name('post.index');
 
 //route untuk menampilkan form tambah post
@@ -33,6 +35,17 @@ Route::get('/post/create', [PostController::class, 'create'])->name('post.create
 
 //route untuk menambahkan data post
 Route::post('/post', [PostController::class, 'store'])->name('post.store');
+
+//route menampilkan edit data
+Route::get('/post/{id}/edit', [PostController::class, 'edit'])->name('post.edit');
+
+//update data
+Route::put('/post/{id}', [PostController::class, 'update'])->name('post.update');
+
+//delete
+Route::delete('/post/{id}', [PostController::class, 'delete'])->name('post.delete');
+
+});
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');

@@ -23,6 +23,7 @@
                                 <th class="text-sm front-medium text-gray-900 px-6 py-4">Deskripsi</th>
                                 <th class="text-sm front-medium text-gray-900 px-6 py-4">Diupload</th>
                                 <th class="text-sm front-medium text-gray-900 px-6 py-4">Diupdate</th>
+                                <th class="text-sm front-medium text-gray-900 px-6 py-4">aksi</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -42,6 +43,28 @@
                                 </td>
                                 <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap text-center">
                                     {{ $item->updated_at }}
+                                </td>
+                                <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap text-center">
+                                    <form onsubmit="return confirm('yakin ingin menghapus?');" 
+                                    action="{{ route('post.delete', $item->id) }}" method="post">
+
+                                    <!--tombol edit -->
+                                        <a href="{{ route('post.edit', $item->id) }}" id="{{ $item->id }}-edit-btn"
+                                            class="group relative h-6 w-24 overflow-hidden rounded-lg bg-white text-lg shadow">
+                                            <div class="absolute inset-0 w-3 bg-amber-400 transition-all duration-[250ms] ease-out group-hover:w-full"></div>
+                                            <span class="relative text-base group-hover:text-white">Edit</span>
+                                        </a>
+                                        
+                                        <!--tombol hapus -->
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="submit" id="{{ $item->id }}-delete-btn"
+                                        class="group relative h-6 w-24 overflow-hidden rounded-lg bg-white text-lg shadow">
+                                            <div class="absolute inset-0 w-3 bg-red-500 transition-all duration-[250ms] ease-out group-hover:w-full"></div>
+                                            <span class="relative text-base group-hover:text-white">Hapus</span>
+                                        </button>
+                                    </form>
+                                
                                 </td>
                             </tr>
                             @endforeach
